@@ -63,7 +63,27 @@ class CRM
 		 	#When an attribute is entered, the user is prompted to enter a new value. Ex. attr selected is "firstname", new value entered is "Joe"
 		 #if "no" is selected, return to main menu
 		 puts "Enter Contact ID: "
-		 id = gets.chomp
+		 id_selection = gets.chomp.to_i
+		 unless id_selection == ""
+		 	puts "Please confirm selection: #{id_selection} (y/n)"
+		 	confirmation = gets.chomp.downcase
+		 		if confirmation == "y"
+		 				#add the following to another method?
+		 				puts "Select an attribute to modify"
+		 				puts "1 - first name"
+		 				puts "2 - last name"
+		 				puts "3 - email"
+		 				puts "4 - notes"
+		 				mod_attribute = gets.chomp.to_i
+		 				rolodex.modify_contact(mod_attribute)
+
+		 			#call rolodex modify method, which should access the instance of the given id number and
+		 		elsif id_selection == "n"
+		 			modify_existing_contact
+		 		else
+		 			puts "Please type 'y' or 'n' to confirm"
+		 		end
+		 end
 	end
 
 	def delete_existing_contact

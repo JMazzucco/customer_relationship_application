@@ -36,5 +36,4 @@ class Rolodex
 			contact.id == contact_id
 		end
 	end
-
 end
