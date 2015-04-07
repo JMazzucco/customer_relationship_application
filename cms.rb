@@ -3,7 +3,6 @@ require_relative "rolodex"
 
 #puts "\e[H\e[2J"
 class CRM
-	#class method - runs and instance on the class. It does not create a new object
 	def initialize
 		@rolodex = Rolodex.new
 	end
@@ -51,63 +50,63 @@ class CRM
 		email = gets.chomp
 		print "Enter a Note: "
 		note = gets.chomp
-		#get new id number from the rolodex?
 		contact = Contact.new(first_name, last_name, email, note)
 		@rolodex.add_contact(contact)
 	end
 
 	def modify_existing_contact
-		#user is prompted to enter an id for the contact to be modified
-		#after id is entered, user if prompted to type "yes" or "no" to confirm selection
-		 #if "yes" is entered, the user is prompted to change the 'first name', 'last name', 'email', or 'notes' by number. The id should remain the same.
-		 	#When an attribute is entered, the user is prompted to enter a new value. Ex. attr selected is "firstname", new value entered is "Joe"
-		 #if "no" is selected, return to main menu
 		 puts "Enter Contact ID: "
 		 id_selection = gets.chomp.to_i
-		 unless id_selection == ""
+		 if id_selection >= 1000
 		 	puts "Please confirm selection: #{id_selection} (y/n)"
 		 	confirmation = gets.chomp.downcase
 		 		if confirmation == "y"
-		 				#add the following to another method?
 		 				puts "Select an attribute to modify"
 		 				puts "1 - first name"
 		 				puts "2 - last name"
 		 				puts "3 - email"
 		 				puts "4 - notes"
-		 				mod_attribute = gets.chomp.to_i
-		 				rolodex.modify_contact(mod_attribute)
+		 				attribute_selection = gets.chomp.to_i
 
-		 			#call rolodex modify method, which should access the instance of the given id number and
+		 				puts "please type new first name" if attribute_selection == 1
+		 				puts "please type new last name" if attribute_selection == 2
+		 				puts "please type new email" if attribute_selection == 3
+		 				puts "please type new notes" if attribute_selection == 4
+		 				new_attribute = gets.chomp
+
+		 				@rolodex.modify_contact(id_selection, new_attribute, attribute_selection)
 		 		elsif id_selection == "n"
 		 			modify_existing_contact
-		 		else
-		 			puts "Please type 'y' or 'n' to confirm"
 		 		end
+		 	else
+		 		modify_existing_contact
 		 end
 	end
 
-	def delete_existing_contact
-		#user is prompted to enter id of contact, then remove contact
+	def display_contact
 		puts "Enter Contact ID: "
-		id = gets.chomp
+		id_selection = gets.chomp.to_i
+		@rolodex.display_particular_contact(id_selection)
+	end
+
+	def delete_existing_contact
+		puts "Enter Contact ID: "
+		id_selection = gets.chomp.to_i
+		@rolodex.delete_contact(id_selection)
 	end
 
 	def display_all_contacts
-		#show all contacts and their id's
-	end
-
-	def display_contact
-		#user is prompted to enter an id, then the corresponding contact is shown
-		puts "Enter Contact ID: "
-		contact_id = gets.chomp.to_i
-		puts @rolodex.find(contact_id)
-		#contact = @rolodex.find(contact_id)
+		@rolodex.display_all_contacts
 	end
 
 	def display_attribute
-		#user is prompted to enter an attribute ('first name', 'last name', 'email', or 'notes'), the display that attribute for all contacts (confirm this with teacher)
-		puts "Enter attribute: "
-		attribute = gets.chomp
+		puts "Select an attribute to display"
+		puts "1 - first name"
+		puts "2 - last name"
+		puts "3 - email"
+		puts "4 - notes"
+		attribute_selection = gets.chomp.to_i
+		@rolodex.display_info_by_attribute(attribute_selection)
 	end
 end
 

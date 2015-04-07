@@ -1,38 +1,46 @@
 class Rolodex
-	attr_reader :contacts
-	#store contacts in this class, and organize
-	#optional: allow ability to search for contacts
+
 	def initialize
 		@contacts = []
 		@id = 1000
 	end
 
 	def add_contact(contact)
-		#read values from Contact class and add them to the array - they should first be in a hash
 		contact.id = @id
-		puts contact
-		puts "contact id" + contact.id.to_s
 		@contacts << contact
 		@id += 1
 	end
 
-	def modify_contact
+	def modify_contact(id_selection, new_attribute, attribute_selection)
+		to_modify = find(id_selection)
+		to_modify.first_name = new_attribute if attribute_selection == 1
+		to_modify.last_name = new_attribute if attribute_selection == 2
+		to_modify.email = new_attribute if attribute_selection == 3
+		to_modify.note = new_attribute if attribute_selection == 4
 	end
 
 	def display_all_contacts
+		@contacts.each {|x| x.to_s}
 	end
 
-	def display_particular_contact
+	def display_particular_contact(id_selection)
+		single_contact = find(id_selection)
+		single_contact.to_s
 	end
 
-	def display_info_by_attribute
+	def display_info_by_attribute(attribute_selection)
+		(@contacts.each {|x| puts x.first_name}) if attribute_selection == 1
+		(@contacts.each {|x| puts x.last_name}) if attribute_selection == 2
+		(@contacts.each {|x| puts x.email}) if attribute_selection == 3
+		(@contacts.each {|x| puts x.notes}) if attribute_selection == 4
 	end
 
-	def delete_contact
+	def delete_contact(id_selection)
+		@contacts.delete_if {|inst| inst.id == id_selection}
 	end
 
 	def find(contact_id)
-		@contacts.select do |contact|
+		@contacts.find do |contact|
 			contact.id == contact_id
 		end
 	end
