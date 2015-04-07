@@ -20,7 +20,7 @@ class Rolodex
 	end
 
 	def display_all_contacts
-		@contacts.each {|x| x.to_s}
+		@contacts.each {|contact| contact.to_s}
 	end
 
 	def display_particular_contact(id_selection)
@@ -29,10 +29,10 @@ class Rolodex
 	end
 
 	def display_info_by_attribute(attribute_selection)
-		(@contacts.each {|x| puts x.first_name}) if attribute_selection == 1
-		(@contacts.each {|x| puts x.last_name}) if attribute_selection == 2
-		(@contacts.each {|x| puts x.email}) if attribute_selection == 3
-		(@contacts.each {|x| puts x.notes}) if attribute_selection == 4
+		(@contacts.each {|contact| puts contact.first_name}) if attribute_selection == 1
+		(@contacts.each {|contact| puts contact.last_name}) if attribute_selection == 2
+		(@contacts.each {|contact| puts contact.email}) if attribute_selection == 3
+		(@contacts.each {|contact| puts contact.notes}) if attribute_selection == 4
 	end
 
 	def delete_contact(id_selection)
